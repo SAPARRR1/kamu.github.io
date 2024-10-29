@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Penyemangat</title>
+    <style>
+        /* Styling dasar untuk tampilan website */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(to bottom right, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
+            overflow: hidden;
+            position: relative;
+            animation: gradientMove 10s ease infinite alternate;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        /* Animasi background particles */
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.6);
+            opacity: 0.5;
+            animation: particleMove 10s linear infinite;
+        }
+
+        @keyframes particleMove {
+            0% {
+                transform: translateY(0) scale(0.5);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* Container utama untuk teks */
+        .container {
+            
+            text-align: center;
+            background-color: rgba(255, 182, 193, 0.8);
+            padding: 40px 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Styling untuk foto */
+        .photo {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            border: 4px solid #ff6f61;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            color: #ff6f61;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        #quote {
+            color: #333;
+            font-size: 1.2rem;
+            margin: 20px 0;
+            font-style: italic;
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+
+        .button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: #fff;
+            background-color: #ff6f61;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s;
+        }
+
+        .button:hover {
+            background-color: #ff4040;
+            transform: scale(1.05);
+        }
+
+        /* Animasi Fade In */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Animasi untuk hati */
+        .heart {
+            position: absolute;
+            color: #ff6f61;
+            font-size: 2rem;
+            opacity: 0.8;
+            animation: floatUp 1s ease-in-out forwards;
+        }
+
+        @keyframes floatUp {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-100px) scale(1.5); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Particles -->
+    <div id="particles"></div>
+
+    <!-- Container utama konten -->
+    <div class="container">
+        <img src="foto/WhatsApp Image 2024-10-29 at 13.42.43_58b2b1a5.jpg" class="photo">
+        <h1>Hai, Semangat Selalu CIPA!</h1>
+        <p id="quote">Klik tombol di bawah untuk mendapatkan kata-kata penyemangat hari ini!</p>
+        <button class="button" onclick="showQuote()">Dapatkan Semangat 💪</button>
+    </div>
+
+    <script>
+        // Array kata-kata penyemangat
+        const quotes = [
+            "Jangan pernah menyerah, hal baik sedang menantimu!",
+            "Kamu lebih kuat dari yang kamu kira!",
+            "Setiap hari adalah peluang baru untuk berbuat baik.",
+            "Percayalah pada proses, hasil akan mengikuti!",
+            "Jangan takut gagal, setiap langkah kecil membawa perubahan besar.",
+            "Semua hal besar dimulai dari langkah pertama, teruslah melangkah!",
+            "Tetap positif, kamu sudah berjalan sejauh ini!",
+            "Hari ini adalah kesempatan untuk menjadi lebih baik dari kemarin!",
+            "MAAF KALO INI GAK BAGUS AKU CUMA PENGEN BUAT KAMU SENANG DOANG :)"
+        ];
+
+        // Fungsi untuk menampilkan kata penyemangat secara acak
+        function showQuote() {
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            const quoteElement = document.getElementById("quote");
+            quoteElement.innerText = quotes[randomIndex];
+            
+            // Efek animasi untuk quote
+            quoteElement.style.opacity = 0; // Sembunyikan sementara
+            setTimeout(() => {
+                quoteElement.style.opacity = 1; // Tampilkan kembali dengan animasi
+                quoteElement.style.animation = "fadeIn 1s ease-in-out";
+            }, 100);
+
+            // Memunculkan animasi hati
+            createHeart();
+        }
+
+        // Fungsi untuk membuat animasi hati
+        function createHeart() {
+            const container = document.querySelector(".container");
+            const heart = document.createElement("div");
+            heart.classList.add("heart");
+            heart.innerText = "❤️";
+            
+            // Posisi acak untuk hati
+            heart.style.left = Math.random() * 80 + "%";
+            container.appendChild(heart);
+
+            // Hapus hati setelah animasi selesai
+            setTimeout(() => {
+                heart.remove();
+            }, 1000); // waktu harus sama dengan durasi animasi floatUp
+        }
+
+        // Fungsi untuk membuat partikel latar belakang
+        function createParticles() {
+            const particlesContainer = document.getElementById("particles");
+            for (let i = 0; i < 30; i++) { // Jumlah partikel
+                const particle = document.createElement("div");
+                particle.classList.add("particle");
+                
+                // Set ukuran dan posisi acak untuk tiap partikel
+                const size = Math.random() * 10 + 5;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.top = `${Math.random() * 100}vh`;
+                
+                particlesContainer.appendChild(particle);
+                
+                // Set durasi animasi acak
+                particle.style.animationDuration = `${Math.random() * 5 + 5}s`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+            }
+        }
+
+        // Panggil fungsi untuk membuat partikel ketika halaman dimuat
+        createParticles();
+    </script>
+</body>
+</html>
